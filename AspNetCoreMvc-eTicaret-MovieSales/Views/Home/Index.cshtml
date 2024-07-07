@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/images/cinema1.jpg" class="d-block w-100" alt="sinema">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/cinema2.jpg" class="d-block w-100" alt="sinema2">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/cinema3.jpg" class="d-block w-100" alt="sinema3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <br /><br />
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="/images/perde.png" height="140px" weight="120px" class="rounded-circle" />
+            <h2 class="fw-normal">Vizyondakiler</h2>
+            <p>Vizyondaki en yeni filmlerin listesini görmek için tıklayınız.</p>
+            <p><a class="btn btn-primary" href="#">Görmek için tıklayınız..</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <img src="/images/perde.png" height="140px" weight="120px" class="rounded-circle" />
+
+            <h2 class="fw-normal">Popüler Filmler</h2>
+            <p>Popüler olan en yeni filmlerin listesini görmek için tıklayınız.</p>
+            <p><a class="btn btn-primary" href="/Movie/Populer">Görmek için tıklayınız..</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <img src="/images/perde.png" height="140px" weight="120px" class="rounded-circle" />
+
+            <h2 class="fw-normal">Gelecek Filmler</h2>
+            <p>Gelecek olan filmlerin listesini görmek için tıklayınız.</p>
+            <p><a class="btn btn-primary" href="#">Görmek için tıklayınız..</a></p>
+        </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+</div>
+
