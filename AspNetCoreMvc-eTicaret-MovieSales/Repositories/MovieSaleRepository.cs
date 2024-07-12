@@ -7,44 +7,45 @@ namespace AspNetCoreMvc_eTicaret_MovieSales.Repositories
     public class MovieSaleRepository : IMovieSalesRepository
     {
         private readonly MovieDbContext _context;
+
         public MovieSaleRepository(MovieDbContext context)
         {
             _context = context;
         }
-
-        public void Add(MovieSale sale)
+        public void Add(MovieSale movieSale)
         {
-            _context.MovieSales.Add(sale);
+            _context.MovieSales.Add(movieSale);    //ara katmana ekler.
+            _context.SaveChanges(); //veritabanı güncellenir.
+        }
+        public int AddSale(MovieSale movieSale)
+        {
+            _context.MovieSales.Add(movieSale);    //ara katmana ekler.
+            _context.SaveChanges(); //veritabanına kayıt edilir ve sql server tarafından otomatik olarak Id (PKey) verilir ve kayıt edilen nesneye atanır.
+            return movieSale.Id;    //(Sql -> @@IDENTITY)
+        }
+        public void Delete(MovieSale movieSale)
+        {
+            _context.MovieSales.Remove(movieSale);
             _context.SaveChanges();
         }
-
-        public int AddSale(MovieSale sale)
+        public void Delete(int id)
         {
-            _context.MovieSales.Add(sale);
-            _context.SaveChanges();
-            return sale.Id;
-        }
-
-        public void Delete(MovieSale sale)
-        {
-            _context.MovieSales.Remove(sale);
+            _context.MovieSales.Remove(Get(id));
             _context.SaveChanges();
         }
-
         public MovieSale Get(int id)
         {
             return _context.MovieSales.Find(id);
         }
-
         public List<MovieSale> GetAll()
         {
             return _context.MovieSales.ToList();
         }
-
-        public void Update(MovieSale sale)
+        public void Update(MovieSale movieSale)
         {
-            _context.MovieSales.Update(sale);
+            _context.MovieSales.Update(movieSale);
             _context.SaveChanges();
         }
+
     }
 }

@@ -8,11 +8,10 @@ namespace AspNetCoreMvc_eTicaret_MovieSales.Models
         {
             session.SetString(key, JsonSerializer.Serialize(value));
         }
-
         public static T? GetJson<T>(this ISession session, string key)
         {
             var value = session.GetString(key);
-            return value == null ? default : JsonSerializer.Deserialize<T>(value); 
+            return value == null ? default : JsonSerializer.Deserialize<T>(value);
         }
     }
 }

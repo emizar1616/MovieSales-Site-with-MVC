@@ -6,47 +6,55 @@ namespace AspNetCoreMvc_eTicaret_MovieSales.Controllers
 {
     public class SepetController : Controller
     {
-        private readonly IMovieRepository _movieRepository;
-        public SepetController(IMovieRepository movieRepository)
+        private readonly IMovieRepository _movieRepo;
+        public SepetController(IMovieRepository movieRepo)
         {
-            _movieRepository = movieRepository;
+            _movieRepo = movieRepo;
         }
-
         List<SepetDetay> sepet;
         SepetDetay siparis = new SepetDetay();
-
         public IActionResult Index()
         {
             sepet = SepetAl();
-            TempData["Toplam Adet"] = siparis.ToplamAdet(sepet);
-            TempData["Toplam Tutar"] = siparis.ToplamTutar(sepet);
+            TempData["ToplamAdet"] = siparis.ToplamAdet(sepet);
+
+            if (siparis.ToplamTutar(sepet) > 0)
+                TempData["ToplamTutar"] = siparis.ToplamTutar(sepet);
 
             return View(sepet);
         }
-
-        public IActionResult Ekle(int Id, int adet)
+        public IActionResult Ekle(int Id, int Adet)
         {
-            var movie = _movieRepository.Get(Id);
+            var movie = _movieRepo.Get(Id);
             sepet = SepetAl();
             SepetDetay siparis = new SepetDetay();
-            siparis.MovieId=movie.Id;
-            siparis.MovieName=movie.Name;
-            siparis.MovieQuantity = adet;
+            siparis.MovieId = movie.Id;
+            siparis.MovieName = movie.Name;
+            siparis.MovieQuantity = Adet;
             siparis.MoviePrice = movie.Price;
-            sepet = siparis.SepeteEkle(sepet,siparis);
+            sepet = siparis.SepeteEkle(sepet, siparis);
             SepetKaydet(sepet);
-            return RedirectToAction("Index"); 
-
+            return RedirectToAction("Index");
         }
-
+        public IActionResult Sil(int id)
+        {
+            sepet = SepetAl();
+            sepet = siparis.SepettenSil(sepet, id);
+            SepetKaydet(sepet);
+            return RedirectToAction("Index");
+        }
+        public IActionResult SepetSil()
+        {
+            //HttpContext.Session.Clear(); //Oturumda bulunan tüm session'ları siler.
+            HttpContext.Session.Remove("sepet"); //Sadece ismi belirtilen session'ı siler.
+            return RedirectToAction("Index");
+        }
         public List<SepetDetay> SepetAl()
         {
             var sepet = HttpContext.Session.GetJson<List<SepetDetay>>("sepet") ?? new List<SepetDetay>();
-            //Buradaki 2 tane arka arkaya soru işareti null ise anlamı taşır. Tek soru işareti null değil anlamı taşırken yeni versiyonlarla gelen (??) işareti null ise anlamı taşımaktadır.
 
             return sepet;
         }
-
         public void SepetKaydet(List<SepetDetay> sepet)
         {
             HttpContext.Session.SetJson("sepet", sepet);

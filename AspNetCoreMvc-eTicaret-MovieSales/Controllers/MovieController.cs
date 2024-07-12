@@ -9,13 +9,19 @@ namespace AspNetCoreMvc_eTicaret_MovieSales.Controllers
     {
         private readonly IMovieRepository _movieRepo;
         private readonly IMapper _mapper;
-        public MovieController(IMovieRepository movieRepo, IMapper mapper)    
+
+        SepetDetay siparis = new SepetDetay();
+        public MovieController(IMovieRepository movieRepo, IMapper mapper)
         {
             _movieRepo = movieRepo;
             _mapper = mapper;
         }
         public IActionResult Index(int? id, string? search)
         {
+            var sepet = HttpContext.Session.GetJson<List<SepetDetay>>("sepet") ?? new List<SepetDetay>();
+            TempData["ToplamAdet"] = siparis.ToplamAdet(sepet);
+            //TempData["ToplamTutar"] = siparis.ToplamTutar(sepet);
+
             var movies = _movieRepo.GetAll();
             if (search != null)
             {
@@ -27,45 +33,39 @@ namespace AspNetCoreMvc_eTicaret_MovieSales.Controllers
             }
             return View(movies);
         }
-
-        public IActionResult AddImages(Movie model, IFormFile formFile)
-        {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", formFile.FileName);
-            var stream = new FileStream(path, FileMode.Create);
-            formFile.CopyTo(stream);
-            model.ImageUrl = "/images/" + formFile.FileName;
-            _movieRepo.Add(_mapper.Map<Movie>(model));
-            return RedirectToAction("Index");
-        }
-
         public IActionResult Populer()
         {
+            var sepet = HttpContext.Session.GetJson<List<SepetDetay>>("sepet") ?? new List<SepetDetay>();
+            TempData["ToplamAdet"] = siparis.ToplamAdet(sepet);
+
             var movies = _movieRepo.GetAll().Where(m => m.IsPopular == true).ToList();
             return View(movies);
         }
-
-        public IActionResult Details(int id)
-        {
-            var movies = _movieRepo.Get(id);
-            return View(movies);
-        }
-
         public IActionResult Local(bool isLocal)
         {
+            var sepet = HttpContext.Session.GetJson<List<SepetDetay>>("sepet") ?? new List<SepetDetay>();
+            TempData["ToplamAdet"] = siparis.ToplamAdet(sepet);
+
             var movies = _movieRepo.GetAll();
-            if (isLocal)
+            if (isLocal)        //Yerli Filmler
             {
                 movies = movies.Where(m => m.IsLocal == true).ToList();
                 ViewBag.Local = "Yerli";
             }
-            else
+            else                //Yabancı Filmler
             {
                 movies = movies.Where(m => m.IsLocal == false).ToList();
                 ViewBag.Local = "Yabancı";
-
             }
-
             return View(movies);
+        }
+        public IActionResult Details(int id)
+        {
+            var sepet = HttpContext.Session.GetJson<List<SepetDetay>>("sepet") ?? new List<SepetDetay>();
+            TempData["ToplamAdet"] = siparis.ToplamAdet(sepet);
+
+            var movie = _movieRepo.Get(id);
+            return View(movie);
         }
     }
 }

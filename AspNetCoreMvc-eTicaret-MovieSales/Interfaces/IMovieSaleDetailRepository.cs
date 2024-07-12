@@ -6,9 +6,10 @@ namespace AspNetCoreMvc_eTicaret_MovieSales.Interfaces
     {
         public List<MovieSaleDetail> GetAll();
         public MovieSaleDetail Get(int id);
-        public void Add(MovieSaleDetail detail);
-        public bool AddRange(List<MovieSaleDetail>? sepet , int movieSaleId);
-        public void Update(MovieSaleDetail detail);
-        public void Delete(MovieSaleDetail detail);
+        public void Add(MovieSaleDetail movieSaleDetail);
+        public bool AddRange(List<SepetDetay> sepet, int movieSaleId);
+        public void Update(MovieSaleDetail movieSaleDetail);
+        public void Delete(MovieSaleDetail movieSaleDetail);
+        public void Delete(int id);
     }
 }

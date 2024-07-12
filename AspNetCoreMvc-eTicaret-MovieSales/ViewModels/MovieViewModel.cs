@@ -7,13 +7,13 @@
         public string Director { get; set; }
         public string Cast { get; set; }
         public string Summary { get; set; }
-        public DateTime RelaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; }
         public int Stock { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
-        public bool IsLocal { get; set; }  //yerli-yabancı
-        public bool IsPopular { get; set; }
-        public bool IsDiscount { get; set; }
+        public bool IsLocal { get; set; }   //Yerli-Yabancı
+        public bool IsPopuler { get; set; }   //Popüler
+        public bool IsDiscount { get; set; }    //İndirimde olanlar
         public int GenreId { get; set; }
     }
 }
